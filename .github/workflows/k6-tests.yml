@@ -1,0 +1,27 @@
+name: K6 Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  k6-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Run smoke test
+        run: k6 run tests/smoke.js
+
+      - name: Run add test
+        run: k6 run tests/add-test.js
+
+      - name: Run multiply load test
+        run: k6 run tests/multiply-load.js
